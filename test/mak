@@ -5,9 +5,9 @@ FILE=$2
 
 CFLAGS="-O3 -s"
 WFLAGS="-Werror -Wall -Wextra -std=c99"
-BUILD_LIB="$CFLAGS $WFLAGS -shared -fPIC -I../src/include"
+BUILD_LIB="$CFLAGS $WFLAGS -shared -fPIC -I../src"
 CC=gcc
-SRC=../src/*
+SRC=../src/*.c
 LIB_TARGET="nekocl.dll"
 
 if [ -z $OPT ]; then
@@ -30,7 +30,7 @@ fi
 
 case $OPT in
 	lib)
-		$CC $BUILD_LIB $SRC $LIB_TARGET
+		$CC $BUILD_LIB $SRC -o $LIB_TARGET
 		;;
 	*)
 		printf "\n Option : $OPT ? \n\n"
