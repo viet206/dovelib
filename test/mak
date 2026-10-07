@@ -1,0 +1,38 @@
+#!/bin/sh
+
+OPT=$1
+FILE=$2
+
+CFLAGS="-O3 -s"
+WFLAGS="-Werror -Wall -Wextra -std=c99"
+BUILD_LIB="$CFLAGS $WFLAGS -shared -fPIC -I../src/include"
+CC=gcc
+SRC=../src/*
+LIB_TARGET="nekocl.dll"
+
+if [ -z $OPT ]; then
+cat <<EOF
+
+	Build Script
+	Usage : $0 option file
+
+	Option :
+
+	lib - build ouput library
+
+	Example :
+
+	$0 lib
+
+EOF
+return 1
+fi
+
+case $OPT in
+	lib)
+		$CC $BUILD_LIB $SRC $LIB_TARGET
+		;;
+	*)
+		printf "\n Option : $OPT ? \n\n"
+		;;
+esac
