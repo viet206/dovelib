@@ -19,6 +19,7 @@ typedef struct {
 }neko_str_t;
 
 typedef neko_str_t* str_t;
+typedef char** node_t;
 
 void buf_copy(byte_t dst,byte_t src,len_t size);
 void buf_zero(byte_t src,len_t size);
