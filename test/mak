@@ -1,16 +1,32 @@
 #!/bin/sh
 
-OPT=$1
-FILE=$2
+#TG = TARGET
+#SRC = SOURCE
+#LC = LOCAL
 
-CFLAGS="-O3 -s"
-WFLAGS="-Werror -Wall -Wextra -std=c99"
-BUILD_LIB="$CFLAGS $WFLAGS -shared -fPIC -I../src"
-CC=gcc
-SRC=../src/*.c
-LIB_TARGET="nekocl.dll"
+SRC_DIR=../src
+SRC_INC=$SRC_DIR/include
 
-if [ -z $OPT ]; then
+TG_NAME="libnekocl.so"
+TG_DIR=$PREFIX/lib
+TG_INC=$PREFIX/include
+
+LC_OPT=$1
+LC_FILE=$2
+
+BUILD_LIB="-shared -fPIC"
+
+install() {
+	cp ./$TG_NAME $TG_DIR
+	cp $SRC_DIR/nekocl.h $TG_INC
+}
+
+uninstall() {
+	rm $TG_DIR/$TG_NAME
+	rm $TG_INC/nekocl.h
+}
+
+if [ -z $LC_OPT ]; then
 cat <<EOF
 
 	Build Script
@@ -19,6 +35,8 @@ cat <<EOF
 	Option :
 
 	lib - build ouput library
+	install : install with \$PREFIX
+	uninstall : uninstall with \$PREFIX
 
 	Example :
 
@@ -28,11 +46,17 @@ EOF
 return 1
 fi
 
-case $OPT in
+case $LC_OPT in
 	lib)
-		$CC $BUILD_LIB $SRC -o $LIB_TARGET
+		clang $SRC_DIR/*.c -I../src/include $BUILD_LIB -o $TG_NAME
+		;;
+	install)
+		install
+		;;
+	uninstall)
+		uninstall
 		;;
 	*)
-		printf "\n Option : $OPT ? \n\n"
+		printf "\n Option : $LC_OPT ? \n\n"
 		;;
 esac

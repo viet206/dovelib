@@ -25,7 +25,8 @@ void buf_copy(byte_t dst,byte_t src,len_t size);
 void buf_zero(byte_t src,len_t size);
 
 str_t str_new(byte_t buf,byte_t rstr,len_t len);
-len_t str_len(byte_t rstr);
+int str_2int(str_t s);
+sig_t str_cmpz(str_t dst,str_t src,len_t len);
 
 str_t sig_2msg(byte_t buf,sig_t sig);
 
