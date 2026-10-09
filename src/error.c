@@ -7,19 +7,14 @@ typedef struct {
 
 str_t sig_2msg(byte_t buf,sig_t sig) {
 	static const msg_t msg_tab[] = {
-		[SIG_BUF_NIL] =
+		[SIG_NULL] =
 		{ 
 		.len = 17 ,
-		.str = "Buffer null value"
-		},
-		[SIG_ADDR_NIL] =
-		{
-		.len = 18 ,
-		.str = "Address null value"
+		.str = "Null pointer"
 		}
 	};
 
-	if ( buf == NULL ) return (void*)SIG_BUF_NIL;
+	if ( buf == SIG_NULL ) return (void*)SIG_NULL;
 
 	str_t s = (str_t) buf;
 

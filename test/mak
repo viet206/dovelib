@@ -1,11 +1,8 @@
-#!/bin/sh
-
 #TG = TARGET
 #SRC = SOURCE
 #LC = LOCAL
 
 SRC_DIR=../src
-SRC_INC=$SRC_DIR/include
 
 TG_NAME="libnekocl.so"
 TG_DIR=$PREFIX/lib
@@ -13,6 +10,8 @@ TG_INC=$PREFIX/include
 
 LC_OPT=$1
 LC_FILE=$2
+
+CC=gcc
 
 BUILD_LIB="-shared -fPIC"
 
@@ -48,7 +47,7 @@ fi
 
 case $LC_OPT in
 	lib)
-		clang $SRC_DIR/*.c -I../src/include $BUILD_LIB -o $TG_NAME
+		$CC $SRC_DIR/*.c -I../src/ $BUILD_LIB -o $TG_NAME
 		;;
 	install)
 		install

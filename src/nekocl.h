@@ -23,16 +23,13 @@
  *
  */
 
-#define NULL 0x0
-
 typedef char* byte_t;
 typedef unsigned int len_t;
 typedef unsigned short uint2;
 typedef unsigned long long usize;
 
 typedef enum {
-	SIG_BUF_NIL = 0x00000001,
-	SIG_ADDR_NIL = 0x00000002,
+	SIG_NULL = 0x0
 }sig_t;
 
 typedef struct {
