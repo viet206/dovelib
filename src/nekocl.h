@@ -1,6 +1,8 @@
 #ifndef NEKO_CORE_LIB
 #define NEKO_CORE_LIB
 
+#define NEKO_VER "0.0.2"
+
 /* 
  * MỤC TIÊU ĐỈNH CAO CỦA NEKO CORE LIB
  *
@@ -21,32 +23,42 @@
  * do khác . đó là "HÃY ĐỂ NÓ ĐƠN GIẢN NẾU
  * KHÔNG CÓ GÌ PHỨC TẠP"
  *
- */
+*/
+
+// All value is same true
+#define FALSE 0
+#define NIL 0
 
 typedef char* byte_t;
 typedef unsigned int len_t;
 typedef unsigned short uint2;
 typedef unsigned long long usize;
-
-typedef enum {
-	SIG_NULL = 0x0
-}sig_t;
+typedef unsigned char bool_t;
 
 typedef struct {
 	len_t len;
 	char str[];
 }neko_str_t;
 
+typedef struct {
+	dyn_tag_t tag;
+	union {
+		byte_t p;
+		int i;
+		char c;
+	};
+}neko_dyn_t;
+
 typedef neko_str_t* str_t;
-typedef char** node_t;
+typedef neko_dyn_t* dyn_t;
 
 void buf_copy(byte_t dst,byte_t src,len_t size);
 void buf_zero(byte_t src,len_t size);
-
 str_t str_new(byte_t buf,byte_t rstr,len_t len);
 int str_2int(str_t s);
-sig_t str_cmpz(str_t dst,str_t src,len_t len);
-
-str_t sig_2msg(byte_t buf,sig_t sig);
+bool_t str_cmpz(str_t dst,str_t src,len_t len);
+void str_upper(str_t src);
+void str_lower(str_t src);
+dyn_t dyn_new(byte_t dst,byte_t src,dyn_tag_t tag);
 
 #endif
