@@ -63,7 +63,7 @@ perf_exec() {
 
 	if command -v perf == 0 ; then
 		if [ -f "$LC_FILE" ]; then
-			perf stat -e $OPT $LC_FILE
+			LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH perf stat -e $OPT $LC_FILE
 			return 0
 		elif [ ! -f "$LC_FILE" ]; then
 			echo_cl red "\n\n file $LC_FILE not found\n\n"
@@ -125,7 +125,7 @@ cat <<EOF
 	Copyright by viet206 in 2026
 
 EOF
-return 1
+exit 1
 fi
 
 case $LC_OPT in

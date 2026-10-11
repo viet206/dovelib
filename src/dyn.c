@@ -17,6 +17,15 @@ dyn_t dyn_new(byte_t dst,byte_t src,dyn_tag_t tag) {
         case PTR_T:
             dyn->p = src;
             break;
+        case LEN_T:
+            dyn->ui = *((len_t*)src);
+            break;
+        case BOOL_T:
+            dyn->b = *((bool_t*)src);
+            break;
+        case UINT2_T:
+            dyn->ui2 = *((uint2*)src);
+            break;
     }
 
     return dyn;

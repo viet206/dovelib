@@ -14,8 +14,8 @@ int main() {
 
 	puts(b->p);
 
-	b = dyn_new(buf,&(int){512},INT_T);
+	b = dyn_lint(buf,8324667,LEN_T);
 
-	printf("%d\n",b->i);
+	printf("%i\n",b->i);
 
 }
