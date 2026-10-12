@@ -13,7 +13,7 @@ TG_DIR=$PREFIX/lib
 TG_INC=$PREFIX/include
 TG_CC=gcc
 TG_WFLAGS="-Werror -Wall -Wextra"
-TG_CFLAGS="$TG_WFLAGS -std=c99 -O3"
+TG_CFLAGS="$TG_WFLAGS -nostdinc -nostdlib -ffreestanding -std=c2y -O3"
 TG_LIB="-shared -fPIC"
 
 # Local
@@ -130,7 +130,7 @@ fi
 
 case $LC_OPT in
 	lib)
-		$TG_CC $SRC_DIR/*.c -I../src/ $TG_OPT $TG_LIB -o $TG_NAME
+		$TG_CC $SRC_DIR/*.c -I../src/ $TG_CFLAGS $TG_LIB -o $TG_NAME
 		;;
 	install)
 		install

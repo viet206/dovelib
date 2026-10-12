@@ -27,8 +27,8 @@
  */
 
 // All value is same true
+#define NIL (void*)0
 #define FALSE 0
-#define NIL 0
 #define TRUE 1
 
 typedef char* byte_t;
@@ -46,10 +46,6 @@ typedef struct {
 typedef enum {
 	PTR_T = 0,
 	INT_T = 1,
-	CHAR_T = 2,
-	LEN_T = 3,
-	BOOL_T = 4,
-	UINT2_T = 5,
 }dyn_tag_t;
 
 typedef struct {
@@ -57,10 +53,6 @@ typedef struct {
 	union {
 		byte_t p;
 		int i;
-		len_t ui;
-		uint2 ui2;
-		bool_t b;
-		char c;
 	};
 }neko_dyn_t;
 

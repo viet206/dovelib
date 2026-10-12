@@ -75,7 +75,7 @@ int str_2int(str_t s) {
 		++i;
 	}else if ( num[i] == '+' ) ++i;
 
-	for ( ; i < s->len ; ++i ) {
+	for ( ; i < (int)s->len ; ++i ) {
 		if ( num[i] >= '0' && num[i] <= '9' ) {
 			reslut = reslut * 10 + ( num[i] - '0' );
 		}
