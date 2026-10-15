@@ -3,33 +3,59 @@
 
 #define NEKO_VER "0.0.2"
 
-/* 
- * MỤC TIÊU ĐỈNH CAO CỦA NEKO CORE LIB
- *
- * #1 : thay thế libc , không phải vì libc
- * dởm , đơn giản là nó vẫn còn quá thô kệch
- * phụ thuộc nặng nề vào OS . NekoCL sinh ra
- * để "cần ít hơn để làm nhiều việc hơn"
- *
- * #2 : Freestanding . Tại sao NekoCL lại
- * chọn con đường Freestanding ? Xuất phát
- * từ ý tưởng "độc lập nền tảng" . code có
- * build bất kỳ môi trường nào hỗ trợ tối
- * thiểu C99 . điều này không chỉ đơn giản
- * giúp lib sạch phụ thuộc hơn , mà giúp
- * dev tập trung hơn vào vấn đề chính.
- *
- * #3 : NekoCL tập trung vào sự linh hoạt ,
- * vì khi có được sự linh hoạt một cách mượt
- * mà , thì Dev sẽ có thể làm được nhiều việc
- * hơn chỉ với 1 thư viện nhỏ như NekoCL
- *
- */
+/*
+ Mục tiêu của NekoCL
+ 
+ #1 : Freestanding 
+ Có thể chạy bất cứ đâu có trình
+ biên dịch C thì đây là 1 điểm mạnh
+ lớn . Nó không cần phải gắn liền
+ với 1 OS , hay 1 thư viện nào cả .
+ 
+ #2 : Khả năng kết hợp cao
+ Thiết kế phải độc lập để đảm bảo
+ có thể kết hợp với các thư viện
+ khác , giúp giảm số lượng code
+ ban đầu
+
+ #3 : Được viết như 1 "Extension C"
+ Bởi C thì quá tối giản , và nghèo
+ những tính năng nâng cao như Table ,
+ Hash nên mới có sự xuất hiện của NekoCL
+ . Vậy tại sao không sử dụng C++ cho khỏe
+ ? bởi nó bây giờ là 1 ngôn ngữ siêu phức
+ tạp , giống như 1 nồi lẩu thập cẩm và nhiều
+ chi phí ẩn
+
+ #4 : Người dùng của NekoCL là ai ?
+ Là những người dùng C , nhưng cần các tính
+ năng cấp cao nhưng lại không có đủ chi phí
+ để xây dựng chúng từ đầu
+
+ #5 : Thiết kế NekoCL xoay quanh cái gì ?
+ Chủ yếu là xoay quanh kiểu động ( dyn_t )
+ . Đó là 1 kiểu cho phép lưu trữ nhiều hình
+ dạng khác nhau của dữ liệu trong một biến
+ , được lấy cảm hứng từ Tagged Union . các
+ kiểu cấp cao sau này chẳng hạn như Hash ,
+ Array , Table , ... đều sẽ là những hình
+ dạng của 1 tập hợp dyn_t
+
+ #6 : Vậy NekoCL có thật sự thay thế libc ?
+ Câu trả lời là không . Bởi như tôi đã nói
+ nó được viết như 1 Extension C để sử dụng
+ các tính năng cấp cao với ít chi phí code
+ ban đầu hơn . Nên nói đúng hơn là "NekoCL
+ sẽ hỗ trợ libc thay vì thay thế nó".
+
+*/
 
 // All value is same true
 #define NIL (void*)0
 #define FALSE 0
 #define TRUE 1
+
+#define DYN_SIZE (int)sizeof(neko_dyn_t)
 
 typedef char* byte_t;
 typedef unsigned int len_t;
@@ -38,38 +64,28 @@ typedef unsigned long long usize;
 typedef unsigned char bool_t;
 typedef void* ptr_t;
 
-typedef struct {
-	len_t len;
-	char str[];
-}neko_str_t;
-
 typedef enum {
 	PTR_T = 0,
 	INT_T = 1,
+	STR_T = 2,
+	UINT_T = 3
 }dyn_tag_t;
 
 typedef struct {
-	dyn_tag_t tag;
 	union {
 		byte_t p;
-		int i;
+		dyn_tag_t tag;
+		int _int;
+		len_t _uint;
 	};
 }neko_dyn_t;
 
-typedef neko_str_t* str_t;
 typedef neko_dyn_t* dyn_t;
 
 void buf_copy(byte_t dst,byte_t src,len_t size);
 void buf_zero(byte_t src,len_t size);
-str_t str_new(byte_t buf,byte_t rstr,len_t len);
-int str_2int(str_t s);
-bool_t str_cmpz(str_t dst,str_t src,len_t len);
-void str_upper(str_t src);
-void str_lower(str_t src);
-dyn_t dyn_new(byte_t dst,byte_t src,dyn_tag_t tag);
 
-#define dyn_lint(dst,src,tag) dyn_new(dst,(byte_t)&(int){src},tag)
-#define dyn_lchar(dst,src,tag) dyn_new(dst,&(char){src},tag)
+dyn_t dyn_new(byte_t dst,byte_t src,dyn_tag_t tag);
 
 #define is_num(x) ( x >= '0' && x <= '9' )
 #define is_alpha(x) ( ( x >= 'a' && x <= 'z' ) || ( x >= 'A' && x <= 'Z') )

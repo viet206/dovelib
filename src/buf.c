@@ -27,7 +27,7 @@ void buf_zero(byte_t src,len_t size) {
 
 	while ( size >= 2 ) {
 		*((uint2*)src) = 0;
-		src += sizeof(usize);
+		src += sizeof(uint2);
 		size -= 2;
 	}
 
