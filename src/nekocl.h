@@ -48,6 +48,11 @@
  ban đầu hơn . Nên nói đúng hơn là "NekoCL
  sẽ hỗ trợ libc thay vì thay thế nó".
 
+ #7 : Vậy những gì NekoCL quan tâm trong suốt
+ quá trình phát triển ?
+ Có khá nhiều , nhưng chủ yếu sẽ quan tâm vào
+ tính năng , độ tin cậy
+
 */
 
 // All value is same true
