@@ -9,13 +9,13 @@ dyn_t dyn_new(byte_t dst,byte_t src,dyn_tag_t tag) {
 
     switch(tag) {
 	case INT_T:
-		dyn->_int = *((int*)src);
+		dyn->iv = *((int*)src);
 		break;
 	case PTR_T:
-		dyn->p = src;
+		dyn->pv = src;
 		break;
 	case UINT_T:
-		dyn->_uint = *((len_t*)src);
+		dyn->uiv = *((uint_t*)src);
 		break;
 	default:
 		return FALSE;

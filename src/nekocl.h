@@ -63,7 +63,7 @@
 #define DYN_SIZE (int)sizeof(neko_dyn_t)
 
 typedef char* byte_t;
-typedef unsigned int len_t;
+typedef unsigned int uint_t;
 typedef unsigned short uint2;
 typedef unsigned long long usize;
 typedef unsigned char bool_t;
@@ -72,23 +72,27 @@ typedef void* ptr_t;
 typedef enum {
 	PTR_T = 0,
 	INT_T = 1,
-	STR_T = 2,
-	UINT_T = 3
+	UINT_T = 2,
+	STR_T = 3
 }dyn_tag_t;
 
 typedef struct {
+	dyn_tag_t tag;
 	union {
-		byte_t p;
-		dyn_tag_t tag;
-		int _int;
-		len_t _uint;
+		byte_t pv;
+		int iv;
+		uint_t uiv;
 	};
+	char rv[];
 }neko_dyn_t;
 
 typedef neko_dyn_t* dyn_t;
 
-void buf_copy(byte_t dst,byte_t src,len_t size);
-void buf_zero(byte_t src,len_t size);
+void buf_copy(byte_t dst,byte_t src,uint_t size);
+void buf_zero(byte_t src,uint_t size);
+
+uint_t str_len(byte_t src,uint_t range);
+dyn_t str_new(byte_t dst,byte_t src,uint_t range);
 
 dyn_t dyn_new(byte_t dst,byte_t src,dyn_tag_t tag);
 

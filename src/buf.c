@@ -1,6 +1,6 @@
 #include "nekocl.h"
 
-void buf_copy(byte_t dst,byte_t src,len_t size) {
+void buf_copy(byte_t dst,byte_t src,uint_t size) {
         while (size >= (int)sizeof(usize)) {
                 *((usize*)dst) = *((usize*)src);
                 dst += sizeof(usize);
@@ -18,7 +18,7 @@ void buf_copy(byte_t dst,byte_t src,len_t size) {
         if (size > 0) *dst++ = *src++;
 }
 
-void buf_zero(byte_t src,len_t size) {
+void buf_zero(byte_t src,uint_t size) {
 	while ( size >= (int)sizeof(usize)) {
 		*((usize*)src) = 0;
 		src += sizeof(usize);
