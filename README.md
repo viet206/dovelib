@@ -9,4 +9,4 @@ mak lib
 sẽ build thư viện theo cách thủ công
 
 ## Giấy Phép
-Dự án được cấp phép theo giấy phép ... . Xem LICENSE để biết thêm chi tiết
+Dự án được cấp phép theo giấy phép MIT . Xem LICENSE để biết thêm chi tiết
