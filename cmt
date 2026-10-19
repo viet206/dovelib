@@ -1,0 +1,21 @@
+#!/bin/sh
+
+TITLE=$1
+FILE=$2
+
+if [ -z $FILE ]; then
+cat <<EOF
+	Commit dài dòng
+	Tên chỉ có vậy thôi
+
+	Cách dùng : $0 title file
+EOF
+exit 1
+fi
+
+if [ ! -f $FILE ]; then
+	echo "Không có tệp"
+	exit 1
+fi
+
+commit -m $TITLE -F $FILE

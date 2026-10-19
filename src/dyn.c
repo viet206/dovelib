@@ -1,26 +1,21 @@
-#include "nekocl.h"
+#include "freestd.h"
 
-dyn_t dyn_new(byte_t dst,byte_t src,dyn_tag_t tag) {
+dyn_t* dyn_new(char* buf,char* src,dyn_tag_t tag) {
+	if ( buf == NIL || src == NIL ) return NIL;
 
-    if ( dst == NIL && src == NIL ) return NIL;
+	dyn_t* d = (dyn_t*) buf;
+	d->tag = tag;
 
-    dyn_t dyn = (dyn_t) dst;
-    dyn->tag = tag;
-
-    switch(tag) {
-	case INT_T:
-		dyn->iv = *((int*)src);
-		break;
-	case PTR_T:
-		dyn->pv = src;
-		break;
-	case UINT_T:
-		dyn->uiv = *((uint_t*)src);
-		break;
-	default:
-		return FALSE;
-		break;
-    }
-
-    return dyn;
+	switch (tag) {
+		case INT:
+			d->type.i = *((int*)src);
+			break;
+		case PTR:
+			d->type.p = src;
+			break;
+		case UINT:
+			d->type.u = *((unsigned int*)src);
+			break;
+	}
+	return d;
 }
