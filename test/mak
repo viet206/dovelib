@@ -1,5 +1,6 @@
 #!/bin/sh
 
 SRC=../src
+CFLAGS="-Werror -Wall -Wextra -O3 -ffreestanding -nostdinc -nostdlib"
 
-clang -I../src ../src/*.c -c -o bin.o
+clang -I../src ../src/*.c $CFLAGS -c -o bin.o
