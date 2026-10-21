@@ -42,13 +42,19 @@ typedef struct {
 	dyn_type type;	
 }dyn_t;
 
+// Primitive function
+bool_t cl_str_cmp(char* d,char* d1,uint_t n);
 dyn_t* dyn_new(char* buf,void* src,tag_t tag);
 uint_t str_len(char* s,uint_t range);
-bool_t dyn_cmp(dyn_t* d1,dyn_t* d2);
 bool_t buf_copy(char* dst,char* src,uint_t size);
 bool_t buf_zero(char* buf,uint_t size);
 dyn_t* dyn_str(char* buf,char* s,uint_t range);
 char** alloc_buf(char* mt_buf,uint_t mt_len,char* buf,uint_t len,uint_t blk_size,uint_t elm);
+bool_t cl_str_upper(char* s,int len);
+bool_t cl_str_lower(char* s,int len);
+
+// dyn_t* function
+bool_t dyn_cmp(dyn_t* d1,dyn_t* d2);
 
 #define is_num(x) ( x >= '0' && x <= '9' )
 #define is_alpha(x) ( ( x >= 'a' && x <= 'z' ) || ( x >= 'A' && x <= 'Z') )

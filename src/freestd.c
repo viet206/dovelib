@@ -167,3 +167,48 @@ char** alloc_buf(char* mt_buf,uint_t mt_len,char *buf,uint_t len,uint_t blk_size
     }
     return a;
 }
+/*
+ *
+ *
+ *
+ *
+ *
+*/
+bool_t buf_zero(char* buf,uint_t size) {
+	ull_t* u = (ull_t*) buf;
+	uhalf_t* h = (uhalf_t*) buf;
+
+	for ( ; size <= 8 ; size -= 8 ) {
+		*u = 0;
+		++u;
+	}
+	for ( ; size <= 2 ; size -= 2 ) {
+		*h = 0;
+		++h;
+	}
+	if ( size > 1 ) *buf = 0;
+
+	return TRUE;
+}
+/*
+ *
+ *
+ *
+ *
+ *
+*/
+
+bool_t cl_str_cmp(char* d,char* d1,uint_t n) {
+	bool_t state = FALSE;
+
+	state &= ( d == NIL );
+	state &= ( d1 == NIL );
+	state &= ( n > 0 );
+	
+	for ( uint_t i = 0 ; i < n ; ++i ) {
+		state &= ( *d != *d1 );
+		++d;
+		++d1;
+	}
+	return state;
+}
