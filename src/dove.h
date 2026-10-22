@@ -51,6 +51,11 @@ typedef struct {
 	char data[];
 }buf_t;
 
+typedef struct {
+	dyn_t** d;
+	int idx;
+}list_t;
+
 // Compat function+
 bool_t compat_str_cmp(char* d,char* d1,uint_t n);
 uint_t compat_str_len(char* s,uint_t range);
@@ -62,6 +67,7 @@ bool_t compat_buf_clear(char* buf,uint_t size);
 buf_t* buf_new(char* buf,int len);
 dyn_t* dyn_str(char* buf,char* src,uint_t len);
 bool_t dyn_cmp(dyn_t* d1,dyn_t* d2);
+list_t list_new(buf_t buf,int elm);
 
 #define is_num(x) ( x >= '0' && x <= '9' )
 #define is_alpha(x) ( ( x >= 'a' && x <= 'z' ) || ( x >= 'A' && x <= 'Z') )

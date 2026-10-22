@@ -65,14 +65,6 @@ bool_t dyn_cmp(dyn_t* d1,dyn_t* d2) {
  *
 */
 
-/*
- *
- *
- *
- *
- *
-*/
-
 dyn_t* dyn_str(char* buf,char* s,uint_t range) {
 	if ( buf == NIL || s == NIL || range == 0 ) return NIL;
 
@@ -91,3 +83,13 @@ dyn_t* dyn_str(char* buf,char* s,uint_t range) {
 
 	return d;
 }
+
+list_t* list_new(char* mt,uint_t mt_len,uint_t idx) {
+
+	bool_t stat = FALSE;
+
+	stat &= ( mt == NIL );
+
+	if (!stat) return NIL;
+
+	stat &= ( 
