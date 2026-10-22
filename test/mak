@@ -3,4 +3,5 @@
 SRC=../src
 CFLAGS="-Werror -Wall -Wextra -O3 -ffreestanding -nostdinc -nostdlib"
 
-cc -I../src ../src/*.c $CFLAGS -c -o bin.o
+cc -I../src ../src/*.c $CFLAGS -c
+ld ./*.o -o bin.o

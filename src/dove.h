@@ -1,13 +1,17 @@
-#ifndef FREE_STANDARD_LIBRARY
-#define FREE_STANDARD_LIBRARY
+#ifndef DOVE_LIB
+#define DOVE_LIB
 
-#define FREESTD_VER "0.0.4"
-#define fn_copy buf_copy
+#define _VER "0.0.5"
+#define fn_copy compat_buf_copy
 #define DYN_SIZE (int)sizeof(dyn_t)
 
-#define NIL (void*)0
-#define FALSE 0
-#define TRUE 1
+typedef enum {
+	FALSE = 0,
+	TRUE = 1,
+	OOM = 2,
+	TAG_NOT_FOUND = 3
+}err_t;
+#define NIL (void*) FALSE
 
 typedef unsigned char bool_t;
 typedef unsigned int uint_t;
@@ -42,16 +46,13 @@ typedef struct {
 	dyn_type type;	
 }dyn_t;
 
-// Primitive function
-bool_t cl_str_cmp(char* d,char* d1,uint_t n);
-dyn_t* dyn_new(char* buf,void* src,tag_t tag);
-uint_t str_len(char* s,uint_t range);
-bool_t buf_copy(char* dst,char* src,uint_t size);
-bool_t buf_zero(char* buf,uint_t size);
-dyn_t* dyn_str(char* buf,char* s,uint_t range);
-char** alloc_buf(char* mt_buf,uint_t mt_len,char* buf,uint_t len,uint_t blk_size,uint_t elm);
-bool_t cl_str_upper(char* s,int len);
-bool_t cl_str_lower(char* s,int len);
+// Primitive function+
+bool_t compat_str_cmp(char* d,char* d1,uint_t n);
+uint_t compat_str_len(char* s,uint_t range);
+bool_t compat_buf_copy(char* dst,char* src,uint_t size);
+char** compat_alloc_buf(char* mt_buf,uint_t mt_len,char *buf,uint_t len,uint_t blk_size,uint_t elm);
+bool_t compat_buf_clear(char* buf,uint_t size);
+bool_t compat_str_cmp(char* d,char* d1,uint_t n);
 
 // dyn_t* function
 bool_t dyn_cmp(dyn_t* d1,dyn_t* d2);
