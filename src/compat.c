@@ -32,29 +32,18 @@ bool_t compat_buf_clear(char* buf,uint_t size) {
         return TRUE;
 }
 
-char** compat_alloc_buf(char* mt_buf,uint_t mt_len,char *buf,uint_t len,uint_t blk_size,uint_t elm) {
+void* compat_alloc_buf(char *buf,uint_t len,uint_t blk_size,uint_t elm) {
     int ok = 1;
 
     ok &= ( elm > 0 );
     ok &= ( blk_size > 0 );
-
-    ok &= (mt_buf != NIL );
     ok &= ( buf != NIL );
-
-    ok &= ( mt_len > 0 );
-    ok &= ( mt_len != elm * sizeof(void*) );
-
     ok &= ( len > 0 );
     ok &= ( len != blk_size * elm );
 
     if (!ok) return NIL;
 
-    char** a = (char**)mt_buf;
-
-    for (int i = 0; (uint_t)i <= elm; i++) {
-        a[i] = buf + blk_size * i;
-    }
-    return a;
+    return buf + elm * blk_size;
 }
 
 bool_t compat_buf_copy(char* dst,char* src,uint_t size) {

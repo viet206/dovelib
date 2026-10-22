@@ -46,15 +46,21 @@ typedef struct {
 	dyn_type type;	
 }dyn_t;
 
-// Primitive function+
+typedef struct {
+	uint_t size;
+	char data[];
+}buf_t;
+
+// Compat function+
 bool_t compat_str_cmp(char* d,char* d1,uint_t n);
 uint_t compat_str_len(char* s,uint_t range);
 bool_t compat_buf_copy(char* dst,char* src,uint_t size);
-char** compat_alloc_buf(char* mt_buf,uint_t mt_len,char *buf,uint_t len,uint_t blk_size,uint_t elm);
+void* compat_alloc_buf(char *buf,uint_t len,uint_t blk_size,uint_t elm);
 bool_t compat_buf_clear(char* buf,uint_t size);
-bool_t compat_str_cmp(char* d,char* d1,uint_t n);
 
-// dyn_t* function
+// Complex Function
+buf_t* buf_new(char* buf,int len);
+dyn_t* dyn_str(char* buf,char* src,uint_t len);
 bool_t dyn_cmp(dyn_t* d1,dyn_t* d2);
 
 #define is_num(x) ( x >= '0' && x <= '9' )
