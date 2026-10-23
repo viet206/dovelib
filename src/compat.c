@@ -16,6 +16,9 @@ bool_t compat_str_cmp(char* d,char* d1,uint_t n) {
 }
 
 bool_t compat_buf_clear(char* buf,uint_t size) {
+	if ( buf == NIL ) return FALSE;
+	if ( size <= 0 ) return ZERO_SIZE;
+
 	ull_t* u = (ull_t*) buf;
         uhalf_t* h = (uhalf_t*) buf;
 
@@ -32,21 +35,11 @@ bool_t compat_buf_clear(char* buf,uint_t size) {
         return TRUE;
 }
 
-void* compat_alloc_buf(char *buf,uint_t len,uint_t blk_size,uint_t elm) {
-    int ok = 1;
-
-    ok &= ( elm > 0 );
-    ok &= ( blk_size > 0 );
-    ok &= ( buf != NIL );
-    ok &= ( len > 0 );
-    ok &= ( len != blk_size * elm );
-
-    if (!ok) return NIL;
-
-    return buf + elm * blk_size;
-}
-
 bool_t compat_buf_copy(char* dst,char* src,uint_t size) {
+
+	if ( dst == NIL ) return FALSE;
+	if ( src == NIL ) return FALSE;
+	if ( size <= 0 ) return ZERO_SIZE;
 
         ull_t* d0 = (ull_t*) dst;
         ull_t* d1 = (ull_t*) src;
@@ -72,6 +65,8 @@ bool_t compat_buf_copy(char* dst,char* src,uint_t size) {
 
 uint_t compat_str_len(char* s,uint_t range) {
         if ( s == NIL ) return FALSE;
+	if ( range <= 0 ) return ZERO_SIZE;
+
         char* p = s;
 
         for ( uint_t i = 0 ; i <= range ; ++i ) {

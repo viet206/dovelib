@@ -5,7 +5,6 @@ dyn_t* dyn_new(char* buf,void* src,tag_t tag) {
 
 	dyn_t* d = (dyn_t*) buf;
 	d->tag = tag;
-
 	switch (tag) {
 		case INT:
 			d->type.i = *((int*)src);
@@ -37,24 +36,34 @@ dyn_t* dyn_new(char* buf,void* src,tag_t tag) {
 */
 
 bool_t dyn_cmp(dyn_t* d1,dyn_t* d2) {
-	if ( d1 == NIL || d2 == NIL ) return FALSE;
-	if ( d1->tag != d2->tag ) return FALSE;
+	int stat = TRUE;
+
+	stat &= ( d1 == NIL );
+	stat &= ( d2 == NIL );
+	if (stat) return FALSE;
+
+	if ( d1->tag != d2->tag ) return TAG_NEQ;
 
 	switch (d1->tag) {
 		case INT:
-			return ( d1->type.i == d2->type.i );
+			stat = ( d1->type.i == d2->type.i );
+			break;
 		case PTR:
-			return ( d1->type.p == d2->type.p );
+			stat = ( d1->type.p == d2->type.p );
+			break;
 		case UINT:
-			return ( d1->type.u == d2->type.u );
+			stat = ( d1->type.u == d2->type.u );
+			break;
 		case PTR_INT:
-			return ( d1->type.int_p == d2->type.int_p );
+			stat = ( d1->type.int_p == d2->type.int_p );
+			break;
 		case PTR_UINT:
-			return ( d1->type.uint_p == d2->type.uint_p );
+			stat = ( d1->type.uint_p == d2->type.uint_p );
+			break;
 		default:
 			return FALSE;
 	}
-	return FALSE;
+	return stat;
 }
 
 /*
@@ -84,12 +93,29 @@ dyn_t* dyn_str(char* buf,char* s,uint_t range) {
 	return d;
 }
 
-list_t* list_new(char* mt,uint_t mt_len,uint_t idx) {
+dyn_t** list_new(char* mt,uint_t mt_len,char* buf,uint_t len,uint_t blk_size,uint_t idx) {
+	bool stat = FALSE;
 
-	bool_t stat = FALSE;
-
-	stat &= ( mt == NIL );
-
+	stat &= ( mt != NIL );
+	stat &= ( buf != NIL );
 	if (!stat) return NIL;
 
-	stat &= ( 
+	stat &= ( len > 0 );
+	stat &= ( mt_len > 0 );
+	stat &= ( blk_size > 0 );
+	stat &= ( idx > 0 );
+	if (!stat) return (void*) ZERO_SIZE;
+
+	stat &= ( mt_len >= idx * sizeof(void*) );
+	stat &= ( len >= idx * blk_size );
+	if (!stat) return (void*) NOT_ENO_MEM;
+
+	dyn_t** l = (dyn_t**) mt;
+
+	for ( uint_t i = 0 ; i <= idx ; i++ ) {
+		l[i] =  (dyn_t*)((char*)buf + i * blk_size);
+	}
+	l[idx] = NIL;
+
+	return l;
+}
