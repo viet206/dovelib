@@ -1,0 +1,15 @@
+Kiến trúc Dovelib
+
+#1 đặt tên
+
+Quy ước đặt tên biến :
+	[prefix][name]_t
+Một số miền prefix được sử dụng :
+- u : chỉ các số không âm ( unsigned )
+
+Quy ước đặt tên hàm :
+	[prefix][name](dst,src,option)
+Một số miền prefix được sử dụng :
+- new : tạo , khởi tạo
+- cmp : so sánh
+- size : lấy độ dài
